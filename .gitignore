@@ -1,5 +1,9 @@
 # Java class files
 *.class
 
+# IDE enviroment
+.classpath
+.project
+
 # generated files
 bin/
