@@ -4,13 +4,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.event.ChangeListener;
 
 public class GuardGUI{
 	private Counter cars;
-	private int parkingLots;
 	
 	/**
 	 * GuardGUI controls the gate of a parkinghouse, and is able to signal others when
@@ -18,19 +15,10 @@ public class GuardGUI{
 	 * 
 	 * @param parkingLots The total number of parking lots in the parkinghouse.
 	 */
-	public GuardGUI(int parkingLots){
-		this.parkingLots = parkingLots;
-		cars = new Counter(this.parkingLots);
+	public GuardGUI(Counter cars){
+		this.cars = cars;
 		
 		drawGUI();
-	}
-	
-	/**
-	 * Notifies all assigned ChangeListeners of current number of free parking lots.
-	 * Useful for initializing new ChangeListeners.
-	 */
-	private void refreshListeners(){
-		cars.change(0);
 	}
 	
 	/**
@@ -40,12 +28,8 @@ public class GuardGUI{
 	 * @return	True: 	Car entered successfully
 	 * 			False: 	Otherwise
 	 */
-	public boolean carEnters(){
-		if(cars.getValue() > 0 ){
-			cars.change(-1);
-			return true;
-		} else
-			return false;
+	public void carEnters(){
+		cars.change(-1);
 	}
 	
 	/**
@@ -55,23 +39,8 @@ public class GuardGUI{
 	 * @return	True: 	Car exited successfully
 	 * 			False: 	Otherwise
 	 */
-	public boolean carExits(){
-		if(cars.getValue() < parkingLots){
-			cars.change(1);
-			return true;
-		} else
-			return false;
-	}
-	
-	/**
-	 * Add ChangeListeners to be notified of changes in the number of cars parked
-	 * and notifies them of current state.
-	 * 
-	 * @param l ChangeListener to be notified of changes.
-	 */
-	public void addListener(ChangeListener l){
-		cars.addChangeListener(l);
-		refreshListeners();
+	public void carExits(){
+		cars.change(1);
 	}
 	
 	/**
@@ -94,28 +63,14 @@ public class GuardGUI{
 		enterButton.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if( !carEnters() ){
-					JOptionPane.showMessageDialog(
-				        null,
-				        "There are no free parking lots left",
-				        "No room left",
-				        JOptionPane.WARNING_MESSAGE
-				    );
-				}
+				carEnters();
 			}
 		});
 		
 		exitButton.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if( !carExits() ){
-					JOptionPane.showMessageDialog(
-				        null,
-				        "All cars have left the parking lot",
-				        "No cars left",
-				        JOptionPane.WARNING_MESSAGE
-				    );
-				}
+				carExits();
 			}
 		});
 		
