@@ -1,5 +1,4 @@
-public class HorseCarriage {
-    private double mileage = 0.0;
+public class HorseCarriage extends Drivable {
     private double hoursLeft = 0.0;
     private double kmPrHour = 10.0;
     
@@ -11,10 +10,6 @@ public class HorseCarriage {
             return true;
         }        
         else return false;
-    }
-    
-    public double getMileage() {
-        return mileage;
     }
     
     public void restHorses() {
