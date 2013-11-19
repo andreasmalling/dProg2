@@ -1,6 +1,7 @@
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class CatFiles {
@@ -17,9 +18,9 @@ public class CatFiles {
 			for(int i = 0; i < args.length-1; i++){	
 				try {
 					Scanner in = 
-							new Scanner(new FileReader(args[i]));
-					while(in.hasNext())
-						writer.write( in.next() );
+							new Scanner(new FileInputStream(args[i]));
+					while(in.hasNextLine())
+						writer.write( in.nextLine() + "\n" );
 					in.close();
 					System.out.println("Filen \"" + args[i] + "\" blev kopieret");
 				} catch(FileNotFoundException e) {
@@ -27,7 +28,7 @@ public class CatFiles {
 				}
 			}
 			writer.close();	
-		} catch(Exception e) {
+		} catch(IOException e) {
 			System.out.println("Output-fil fejl");
 		}
 	}
