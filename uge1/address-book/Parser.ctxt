@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Parser()
+comment1.target=String\ getCommand()
+comment1.text=\nRead\ the\ next\ command\ from\ the\ user.\nThe\ returned\ command\ will\ be\ valid.\n@return\ A\ valid\ command.\n\n
+comment2.target=void\ showCommands()
+comment2.text=\nPrint\ out\ a\ list\ of\ valid\ command\ words.\n\n
+comment3.target=String\ readLine()
+comment3.text=\n@return\ A\ line\ of\ text\ from\ the\ user.\n\n
+numComments=4

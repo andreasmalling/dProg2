@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.params=book
+comment0.target=AddressBookTextInterface(AddressBook)
+comment0.text=\nConstructor\ for\ objects\ of\ class\ AddressBookTextInterface\n@param\ book\ The\ address\ book\ to\ be\ manipulated.\n\n
+comment1.target=void\ run()
+comment1.text=\nRead\ a\ series\ of\ commands\ from\ the\ user\ to\ interact\nwith\ the\ address\ book.\ Stop\ when\ the\ user\ types\ 'quit'.\n\n
+comment2.target=void\ add()
+comment2.text=\nAdd\ a\ new\ entry.\n\n
+comment3.target=void\ get()
+comment3.text=\nFind\ an\ entry\ matching\ a\ key.\n\n
+comment4.target=void\ remove()
+comment4.text=\nRemove\ an\ entry\ matching\ a\ key.\n\n
+comment5.target=void\ find()
+comment5.text=\nFind\ entries\ matching\ a\ key\ prefix.\n\n
+comment6.target=void\ help()
+comment6.text=\nList\ the\ available\ commands.\n\n
+comment7.target=void\ list()
+comment7.text=\nList\ the\ address\ book's\ contents.\n\n
+numComments=8
