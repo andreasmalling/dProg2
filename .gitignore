@@ -4,6 +4,8 @@
 # IDE enviroment
 .classpath
 .project
+.idea/
+*.iml
 
 # generated files
 bin/

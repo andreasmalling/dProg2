@@ -1,5 +1,5 @@
-import java.util.*;
 import javax.swing.event.*;
+import java.util.*;
 
 public class Counter {
     private int value;
