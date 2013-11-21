@@ -1,4 +1,4 @@
-# Modellerering af Spillekort
+# Modellering af Spillekort
 
 
 I denne opgave skal du lave en klasse *Card*, der modellerer et spillekort.
