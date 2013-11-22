@@ -1,11 +1,14 @@
 # Java class files
 *.class
 
-# IDE enviroment
+# Eclipse IDE enviroment
 .classpath
 .project
+
+# IntelliJ IDE enviroment
 .idea/
 *.iml
 
 # generated files
 bin/
+out/
