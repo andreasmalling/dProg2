@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class CatFiles {
 
 	public static void main(String[] args) {
-		if(args.length < 2) {
-			System.out.println("Du skal indtaste minimum én input-fil og én output-fil");
+		if(args.length < 3) {
+			System.out.println("Du skal indtaste minimum to input-filer og én output-fil");
 			System.exit(1);
 		}
 		try {
