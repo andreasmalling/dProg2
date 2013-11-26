@@ -7,56 +7,55 @@ public class MultiSet<E> extends AbstractCollection {
 
 	@Override
 	public boolean add(Object o) {
-		if(o instanceof String) {
-			E currentKey = (E) o;
-			for( E s : multiSet.keySet() ) {
-				if(currentKey.equals(s)) {
-					multiSet.put( currentKey,
-							multiSet.get(currentKey)+1 );
-					return true;
-				}
+		// if(o instanceof E) {                         // Not possible for template-type ?
+		E currentKey = (E) o;
+		for( E s : multiSet.keySet() ) {                // Checks for Key, if present increment count
+			if(currentKey.equals(s)) {
+				multiSet.put( currentKey,               // Get keys current count and increment it
+						multiSet.get(currentKey) +1 );
+				return true;
 			}
-			multiSet.put(currentKey, 1);
-			return true;
 		}
-		return false;
+		multiSet.put(currentKey, 1);
+		return true;                                    // If not present, make with count 1
+		// } return false;
+	}
+
+	@Override
+	public int size() {
+		return multiSet.keySet().size();
 	}
 
 	@Override
 	public Iterator iterator() {
 		return new Iterator<E>() {
-			private int count = 0;
-			private E currentKey;
+			private int count = 0;                                  // Keeps track of current keys number of instances
+			private E currentKey = null;                            // Keeps track of current key
 
 			@Override
 			public boolean hasNext() {
-				if( count == 0 )
+				if( count <= 0 )                                    // If the count of currentKey is 0, check for next key
 					return multiSet.keySet().iterator().hasNext();
-				else
+				else                                                // If count is larger than 0, there is another instance of currentKey
 					return true;
 			}
 
 			@Override
 			public E next() {
-				if( count == 0 ) {
+				if( count <= 0 ) {                                  // If the count of currentKey is 0, goto next key and read count
 					currentKey = multiSet.keySet().iterator().next();
 					count = multiSet.get(currentKey);
 					return currentKey;
-				} else {
+				} else {                                            // Decrements count and returns currentKey
 					count--;
 					return currentKey;
 				}
 			}
 
 			@Override
-			public void remove() {
+			public void remove() {                                  // Operation not supported
 				throw new UnsupportedOperationException();
 			}
 		};
-	}
-
-	@Override
-	public int size() {
-		return multiSet.keySet().size();
 	}
 }
