@@ -2,7 +2,7 @@ import java.util.AbstractCollection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class MultiSet<E> extends AbstractCollection {
+public class MultiSet<E> extends AbstractCollection<E> {
 	private HashMap<E,Integer> multiSet = new HashMap<E,Integer>();
 
 	@Override
@@ -22,14 +22,52 @@ public class MultiSet<E> extends AbstractCollection {
 	}
 
 	@Override
+	public boolean remove(Object o) {
+		E currentKey = (E) o;
+		for( E s : multiSet.keySet() ) {                // Checks if Key is present
+			if(currentKey.equals(s)) {
+				if( multiSet.get(currentKey) <= 1)      // If 1 instance, remove key and value
+					multiSet.remove(currentKey);
+				else
+					multiSet.put( currentKey,           // If more then 1 instance, decrement it
+						multiSet.get(currentKey) - 1 );
+				return true;
+			}
+		}
+		return false;                                    // If key not present, return false
+	}
+
+	@Override
+	public String toString() {
+		return multiSet.entrySet().toString();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		MultiSet other = (MultiSet) o;
+		if ( multiSet.equals(other.multiSet) )
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return multiSet.hashCode();
+	}
+
+	@Override
 	public int size() {
 		return multiSet.keySet().size();
 	}
 
 	@Override
-	public Iterator iterator() {
+	public Iterator<E> iterator() {
 		return new Iterator<E>() {
-			private int count = 0;                                  // Keeps track of current keys number of instances
+			private int count = 0;                                  // Keeps track of current key's number of instances
 			private E currentKey = null;                            // Keeps track of current key
 
 			@Override
