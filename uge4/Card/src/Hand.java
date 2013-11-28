@@ -18,9 +18,12 @@ public class Hand {
 
 	@Override
 	public boolean equals(Object o) {
-		if(this == o) {return true;}
-		if(o == null) {return false;}
-		if (getClass() != o.getClass()) {return false;}
+		if(this == o)
+			return true;
+		if(o == null)
+			return false;
+		if (getClass() != o.getClass())
+			return false;
 		Hand other = (Hand) o;
 		return cards.equals(other.cards);
 	}

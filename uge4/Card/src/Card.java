@@ -7,20 +7,12 @@ public class Card implements Comparable<Card> {
 		rank = r;
 	}
 
-	public Rank getRank() {
-		return rank;
-	}
-
-	public Suit getSuit() {
-		return suit;
-	}
-
 	@Override
 	public int compareTo(Card other) {
-		if( getRank().equals(other.getRank()) ) {
-			return getSuit().compareTo(other.getSuit());
+		if( rank.equals(other.rank) ) {
+			return suit.compareTo(other.suit);
 		}
-		return getRank().compareTo(other.getRank());
+		return rank.compareTo(other.rank);
 	}
 
 	public String toString(){
@@ -36,12 +28,12 @@ public class Card implements Comparable<Card> {
 		if (getClass() != obj.getClass())
 			return false;
 		Card other = (Card) obj;
-		return  getRank().equals(other.getRank()) &&
-				getSuit().equals(other.getSuit());
+		return  rank.equals(other.rank) &&
+				suit.equals(other.suit);
 	}
 
 	@Override
 	public int hashCode() {
-		return 7 * getRank().hashCode() + 19 * getSuit().hashCode();
+		return 7 * rank.hashCode() + 19 * suit.hashCode();
 	}
 }
