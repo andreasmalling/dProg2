@@ -11,10 +11,6 @@ public class Hand {
 		return cards.remove(c);
 	}
 
-	public TreeSet<Card> getCards() {
-		return cards;
-	}
-
 	@Override
 	public String toString(){
 		return cards.toString();
@@ -26,7 +22,7 @@ public class Hand {
 		if(o == null) {return false;}
 		if (getClass() != o.getClass()) {return false;}
 		Hand other = (Hand) o;
-		return cards.equals(other.getCards());
+		return cards.equals(other.cards);
 	}
 
 	@Override
