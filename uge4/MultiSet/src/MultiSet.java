@@ -1,36 +1,39 @@
-import java.util.AbstractCollection;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 public class MultiSet<E> extends AbstractCollection<E> {
-	private HashMap<E,Integer> multiSet = new HashMap<E,Integer>();
+	private HashMap<E,Integer> hashMap = new HashMap<>();
 
-	@Override
-	public boolean add(Object o) {
-		// if(o instanceof E) {                         // Not possible for template-type ?
-		E currentKey = (E) o;
-		for( E s : multiSet.keySet() ) {                // Checks for Key, if present increment count
-			if(currentKey.equals(s)) {
-				multiSet.put( currentKey,               // Get keys current count and increment it
-						multiSet.get(currentKey) +1 );
-				return true;
-			}
-		}
-		multiSet.put(currentKey, 1);
-		return true;                                    // If not present, make with count 1
-		// } return false;
+	public MultiSet(){}
+	public MultiSet(Collection<E> c) {
+		addAll(c);
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
+	public boolean add(Object o) {
+		E currentKey = (E) o;
+		for( E s : hashMap.keySet() ) {                // Checks for Key, if present increment count
+			if(currentKey.equals(s)) {
+				hashMap.put( currentKey,               // Get keys current count and increment it
+						hashMap.get(currentKey) +1 );
+				return true;
+			}
+		}
+		hashMap.put(currentKey, 1);
+		return true;                                    // If not present, make with count 1
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
 	public boolean remove(Object o) {
 		E currentKey = (E) o;
-		for( E s : multiSet.keySet() ) {                // Checks if Key is present
+		for( E s : hashMap.keySet() ) {                // Checks if Key is present
 			if(currentKey.equals(s)) {
-				if( multiSet.get(currentKey) <= 1)      // If 1 instance, remove key and value
-					multiSet.remove(currentKey);
+				if( hashMap.get(currentKey) <= 1)      // If 1 instance, remove key and value
+					hashMap.remove(currentKey);
 				else
-					multiSet.put( currentKey,           // If more then 1 instance, decrement it
-						multiSet.get(currentKey) - 1 );
+					hashMap.put( currentKey,           // If more then 1 instance, decrement it
+						hashMap.get(currentKey) - 1 );
 				return true;
 			}
 		}
@@ -39,29 +42,31 @@ public class MultiSet<E> extends AbstractCollection<E> {
 
 	@Override
 	public String toString() {
-		return multiSet.entrySet().toString();
+		return hashMap.entrySet().toString();
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)                                  // Check for comparing self
+			return true;
+		if (o == null || getClass() != o.getClass())    // Check for same class, and null
+			return false;
 
 		MultiSet other = (MultiSet) o;
-		if ( multiSet.equals(other.multiSet) )
-			return true;
-		else
-			return false;
+		return hashMap.equals(other.hashMap);
 	}
 
 	@Override
 	public int hashCode() {
-		return multiSet.hashCode();
+		return hashMap.hashCode();
 	}
 
 	@Override
 	public int size() {
-		return multiSet.keySet().size();
+		int totalSize = 0;
+		for(int i : hashMap.values())
+		    totalSize += i;
+		return totalSize;
 	}
 
 	@Override
@@ -69,25 +74,23 @@ public class MultiSet<E> extends AbstractCollection<E> {
 		return new Iterator<E>() {
 			private int count = 0;                                  // Keeps track of current key's number of instances
 			private E currentKey = null;                            // Keeps track of current key
+			private Iterator<E> keyIterator = hashMap.keySet().iterator();
 
 			@Override
 			public boolean hasNext() {
-				if( count <= 0 )                                    // If the count of currentKey is 0, check for next key
-					return multiSet.keySet().iterator().hasNext();
-				else                                                // If count is larger than 0, there is another instance of currentKey
-					return true;
+				if( count == 0 )                                  // If the count of currentKey is 0, check for next key
+					return keyIterator.hasNext();
+				return true;                                       // If count is larger than 0, there is another instance of currentKey
 			}
 
 			@Override
 			public E next() {
-				if( count <= 0 ) {                                  // If the count of currentKey is 0, goto next key and read count
-					currentKey = multiSet.keySet().iterator().next();
-					count = multiSet.get(currentKey);
-					return currentKey;
-				} else {                                            // Decrements count and returns currentKey
-					count--;
-					return currentKey;
+				if( count == 0 ) {                                  // If the count of currentKey is 0, goto next key and read count
+					currentKey = keyIterator.next();
+					count = hashMap.get(currentKey);
 				}
+				count--;
+				return currentKey;
 			}
 
 			@Override
