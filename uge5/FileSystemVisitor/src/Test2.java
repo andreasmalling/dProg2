@@ -24,7 +24,7 @@ public class Test2 {
         }
         FileSystemNode d = buildFileTree(new java.io.File(rootDirName));
         d.accept(new ListFileSizeVisitor());
-        //System.out.println("SizeVisitor says size is: " + d.accept(new SizeVisitor()));
-        //d.accept(new SearchVisitor("Test"));
+        System.out.println("SizeVisitor says size is: " + d.accept(new SizeVisitor()));
+        d.accept(new SearchVisitor("Test"));
     }
 }
