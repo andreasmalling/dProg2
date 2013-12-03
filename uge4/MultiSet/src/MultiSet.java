@@ -12,12 +12,10 @@ public class MultiSet<E> extends AbstractCollection<E> {
 	@SuppressWarnings("unchecked")
 	public boolean add(Object o) {
 		E currentKey = (E) o;
-		for( E s : hashMap.keySet() ) {                // Checks for Key, if present increment count
-			if(currentKey.equals(s)) {
-				hashMap.put( currentKey,               // Get keys current count and increment it
-						hashMap.get(currentKey) +1 );
-				return true;
-			}
+		if(hashMap.containsKey(currentKey)) {                // Checks for Key, if present increment count
+			hashMap.put( currentKey,                         // Get keys current count and increment it
+					hashMap.get(currentKey) +1 );
+			return true;
 		}
 		hashMap.put(currentKey, 1);
 		return true;                                    // If not present, make with count 1
@@ -27,22 +25,20 @@ public class MultiSet<E> extends AbstractCollection<E> {
 	@SuppressWarnings("unchecked")
 	public boolean remove(Object o) {
 		E currentKey = (E) o;
-		for( E s : hashMap.keySet() ) {                // Checks if Key is present
-			if(currentKey.equals(s)) {
-				if( hashMap.get(currentKey) <= 1)      // If 1 instance, remove key and value
-					hashMap.remove(currentKey);
-				else
-					hashMap.put( currentKey,           // If more then 1 instance, decrement it
-						hashMap.get(currentKey) - 1 );
-				return true;
-			}
+		if(hashMap.containsKey(currentKey)) {
+			if(hashMap.get(currentKey) <= 1)             // If 1 instance, remove key and value
+				hashMap.remove(currentKey);
+			else
+				hashMap.put( currentKey,                 // If more then 1 instance, decrement it
+					hashMap.get(currentKey) - 1 );
+			return true;
 		}
 		return false;                                    // If key not present, return false
 	}
 
 	@Override
 	public String toString() {
-		return hashMap.entrySet().toString();
+		return hashMap.toString();
 	}
 
 	@Override
