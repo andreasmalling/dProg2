@@ -1,22 +1,27 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.concurrent.BlockingQueue;
 
 public class WordCount implements Runnable {
 	private static int id = 0;
 	private int myId;
 	private String file;
+	private BlockingQueue<Integer> queue;
 
 
-	public WordCount(String file) {
+	public WordCount(String file, BlockingQueue<Integer> queue) {
 		this.file = file;
 		myId = ++id;
+		this.queue = queue;
 	}
 
 	@Override
 	public void run() {
 		System.out.println("Thread " + myId + " running");
-		System.out.println(file + ": " + countWords(file));
+		try {
+			queue.put( countWords(file) );
+		} catch (InterruptedException e) {}
 	}
 
 	public int countWords(String file) {
