@@ -1,6 +1,6 @@
 public class SearchVisitor implements FileSystemVisitor<Void> {
-	String searchKey;
-	String path = "";
+	private String searchKey;
+	private static String path = "";
 
 	public SearchVisitor(String searchKey) {
 		this.searchKey = searchKey;
@@ -9,8 +9,8 @@ public class SearchVisitor implements FileSystemVisitor<Void> {
 	@Override
 	public Void visitFile(FileNode f) {
 		if(f.getName().contains(searchKey)) {           // If file contains string
-		path += f.getName();                            //      - append filename
-			System.out.println(path);                   //      - Print out path
+		path += f.getName();                            //  append filename to path
+			System.out.println(path);                   //  and print out path
 		}
 		return null;
 	}
@@ -18,18 +18,12 @@ public class SearchVisitor implements FileSystemVisitor<Void> {
 	@Override
 	public Void visitDirectory(DirectoryNode d) {
 		String oldPath = "";
-		for(FileSystemNode f : d) {
-			if( f instanceof DirectoryNode) {
-				oldPath = path;
-				path += d.getName() + "/";
-				visitDirectory( (DirectoryNode) f );
-				path = oldPath;
-			} else if( f instanceof FileNode ) {
-				oldPath = path;
-				visitFile( (FileNode) f );
-				path = oldPath;
-			}
+		oldPath = path;                                 // "Backup" path
+		path += d.getName() + "/";                      // Append dir
+		for(FileSystemNode n : d) {
+			n.accept(new SearchVisitor(searchKey));
 		}
+		path = oldPath;                                 // "Restore" path  ~ go one recursive call back
 		return null;
 	}
 }
