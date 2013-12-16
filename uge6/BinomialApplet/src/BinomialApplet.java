@@ -4,11 +4,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BinomialApplet extends JApplet {
+public class BinomialApplet extends Applet {
+	private final int FIELD_WIDTH = 3;
 
 	private int n, k;
-	private TextField inputN = new TextField(9);
-	private TextField inputK = new TextField(9);
+	private TextField inputN = new TextField(FIELD_WIDTH);
+	private TextField inputK = new TextField(FIELD_WIDTH);
 	private JButton calculateButton = new JButton("Calculate");
 	private JButton modeButton = new JButton("Mode: B1");
 	private JLabel result = new JLabel("Result:");
@@ -18,7 +19,9 @@ public class BinomialApplet extends JApplet {
 		/* Setup GUI */
 		setLayout(new FlowLayout());
 		add(modeButton);
+		add(new JLabel("n:"));
 		add(inputN);
+		add(new JLabel("k:"));
 		add(inputK);
 		add(calculateButton);
 		add(result);
@@ -46,7 +49,8 @@ public class BinomialApplet extends JApplet {
 		});
 	}
 
-	public void callBinomial() {
+	private void callBinomial() {
+		/* Validate integer input */
 		try {
 			n = Integer.parseInt( inputN.getText() );
 			k = Integer.parseInt( inputK.getText() );
@@ -58,6 +62,7 @@ public class BinomialApplet extends JApplet {
 			return;
 		}
 
+		/* Validate n and k value-size */
 		if( k > n) {
 			JOptionPane.showMessageDialog(null,
 					"N-value must be greater than K-value",
@@ -79,6 +84,8 @@ public class BinomialApplet extends JApplet {
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+
+		/* Calculate */
 		result.setText( "Result: " + method.binomial(n,k) );
 	}
 }
