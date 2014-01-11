@@ -1,4 +1,4 @@
-public class Binomial2 {
+public class Binomial2 implements Binomial{
 	/**
 	 * Brugen af 2 rekursive kald, gør metoden langsommere end den som kun benytter et enkelt
 	 */
