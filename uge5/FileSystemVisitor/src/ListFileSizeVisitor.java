@@ -1,5 +1,5 @@
 public class ListFileSizeVisitor implements FileSystemVisitor<Void> {
-	private static String indent = "";
+	private String indent = "";
 
 	@Override
 	public Void visitFile(FileNode f) {
@@ -13,7 +13,7 @@ public class ListFileSizeVisitor implements FileSystemVisitor<Void> {
 		System.out.println(indent + "directory " + d.getName() + " containing");         // Print name of current dir
 		indent += "   ";                                                                 // Increase indent for next level
 		for(FileSystemNode n : d) {
-			n.accept(new ListFileSizeVisitor());
+			n.accept(this);
 		}
 		indent = oldIndent;                                                              // Decrease indent for current level
 		System.out.println(indent + "total " + d.accept(new SizeVisitor()) + " bytes");  // Print size of current dir
